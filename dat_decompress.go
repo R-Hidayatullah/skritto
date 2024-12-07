@@ -414,7 +414,7 @@ func convertU8ToU32(input []uint8) ([]uint32, error) {
 }
 
 // Inflate the buffer
-func inflateBuffer(inputBufferSize uint32, inputBuffer []uint8, outputBufferSize *uint32, customOutputBufferSize uint32) ([]uint8, error) {
+func inflateBuffer(inputBuffer []uint8, outputBufferSize *uint32, customOutputBufferSize uint32) ([]uint8, error) {
 	if inputBuffer == nil {
 		return nil, errors.New("input buffer is null")
 	}
@@ -455,7 +455,7 @@ func inflateBuffer(inputBufferSize uint32, inputBuffer []uint8, outputBufferSize
 	needBits(stateData, 32)
 	tempOutputBufferSize := readBits(stateData, 32)
 	dropBits(stateData, 32)
-
+	log.Println("Original decompressed size :", tempOutputBufferSize)
 	if *outputBufferSize != 0 {
 		// We do not take max here as we won't be able to have more than the output available
 		if tempOutputBufferSize > *outputBufferSize {
